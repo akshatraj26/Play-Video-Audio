@@ -21,3 +21,22 @@ async def main():
 @app.get("/audio23/", response_class=FileResponse)
 async def main():
     return r"D:\Russian video\Rauf & Faik\Rauf & Faik - я люблю тебя давно (Official Audio) ( 256kbps cbr ).mp3"
+
+
+
+@app.get("/media/{file_path}")
+async def serve_media(file_path: str):
+    media_path = f"path/to/media/{file_path}"  # Replace with your media directory
+    media_type = None
+
+    if file_path.endswith(".mp4"):
+        media_type = "video/mp4"
+    elif file_path.endswith(".mp3"):
+        media_type = "audio/mpeg"
+    elif file_path.endswith(".jpg"):
+        media_type = "image/jpeg"
+
+    if media_type:
+        return FileResponse(media_path, media_type=media_type, filename=file_path)
+    else:
+        return {"error": "Unsupported media type"}
